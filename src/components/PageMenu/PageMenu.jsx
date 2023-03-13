@@ -5,10 +5,11 @@ import {
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import { Badge } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/userSlice";
 import { userRequest } from "../../requestMethods";
+import { resetCart } from "../../redux/cartSlice";
 
 const PageMenu = ({
   ItemClassName,
@@ -19,9 +20,11 @@ const PageMenu = ({
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(resetCart());
     userRequest.defaults.headers.token = "";
   };
 
@@ -34,7 +37,7 @@ const PageMenu = ({
         onClick={() => navigate("/cart")}
       >
         <span className={TitlesClassName}>Cart</span>
-        <Badge badgeContent={2} color="primary" overlap="rectangular">
+        <Badge badgeContent={quantity} color="primary" overlap="rectangular">
           <ShoppingCartOutlined />
         </Badge>
       </div>
