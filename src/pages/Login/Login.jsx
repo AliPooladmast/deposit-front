@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/apiCalls";
 import style from "./login.module.scss";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({});
 
   const handleInput = (e) => {
@@ -10,6 +13,7 @@ const Login = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    login(dispatch, input);
   };
 
   return (
