@@ -1,8 +1,19 @@
 import { ShoppingCartOutlined } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/cartSlice";
 import style from "./ProductItem.module.scss";
 
 const ProductItem = ({ item }) => {
-  const handleAddClick = () => {};
+  const dispatch = useDispatch();
+
+  const handleAddClick = () => {
+    dispatch(
+      addProduct({
+        ...item,
+        quantity: 1,
+      })
+    );
+  };
 
   return (
     <div className={style.Wrapper}>
