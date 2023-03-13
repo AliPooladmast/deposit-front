@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NavBar from "../../components/NavBar/NavBar";
 import ProductItem from "../../components/ProductItem/ProductItem";
 import { publicRequest } from "../../requestMethods";
 import style from "./ProductList.module.scss";
@@ -22,6 +23,7 @@ function ProductList() {
 
   return (
     <div className={style.Container}>
+      <NavBar />
       <div className={style.Products}>
         <div className={style.Wrapper}>
           {products?.length > 0 &&
