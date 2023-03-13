@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { register } from "../../redux/apiCalls";
 import style from "./register.module.scss";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [input, setInput] = useState({});
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleInput = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -18,6 +21,12 @@ const Register = () => {
       register(dispatch, others);
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/products");
+    }
+  }, [currentUser]); //eslint-disable-line
 
   return (
     <div className={style.Container}>
