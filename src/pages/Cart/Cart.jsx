@@ -8,9 +8,12 @@ import {
   deleteProduct,
   incrementProduct,
 } from "../../redux/cartSlice";
+import { userRequest } from "../../requestMethods";
+import { useState } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const [deposit, setDeposit] = useState("0");
   const cart = useSelector((state) => state.cart);
 
   const onDeleteProduct = (product) => {
@@ -25,6 +28,19 @@ const Cart = () => {
     }
   };
 
+  const handleDeposit = async () => {
+    try {
+      const res = await userRequest.put("users/perform/deposit", {
+        deposit: "20",
+      });
+      if (res) {
+        setDeposit(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleCheckout = () => {};
 
   return (
@@ -36,7 +52,15 @@ const Cart = () => {
           <Link to="/products">
             <button className={style.Button}>CONTINUE SHOPPING</button>
           </Link>
+
+          <div>
+            <input className={style.Input} type="text" />
+            <button className={style.Button} onClick={handleDeposit}>
+              DEPOSIT NOW
+            </button>
+          </div>
         </div>
+
         <div className={style.Bottom}>
           <div
             className={
@@ -94,6 +118,12 @@ const Cart = () => {
           </div>
           <div className={style.Summary}>
             <h1>Order Summary</h1>
+
+            <div className={style.SummaryItem}>
+              <span className={style.SummatyItemText}>Deposit</span>
+              <span className={style.SummatyItemPrice}>{deposit}</span>
+            </div>
+
             <div className={style.SummaryItem}>
               <span className={style.SummatyItemText}>SubTotal</span>
               <span className={style.SummatyItemPrice}>
