@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/apiCalls";
 import style from "./register.module.scss";
 
 const Register = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({});
 
   const handleInput = (e) => {
@@ -10,6 +13,10 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    if (input.password === input.confirmPassword) {
+      const { confirmPassword, ...others } = input;
+      register(dispatch, others);
+    }
   };
 
   return (
