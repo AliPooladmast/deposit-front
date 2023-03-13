@@ -29,7 +29,7 @@ const cartSlice = createSlice({
         state.products.push(action.payload);
       }
 
-      state.total += action.payload.price * action.payload.quantity;
+      state.total += action.payload.cost * action.payload.quantity;
     },
     deleteProduct: (state, action: PayloadAction<any>) => {
       state.quantity -= 1;
@@ -37,21 +37,21 @@ const cartSlice = createSlice({
         state.products.findIndex((item) => item._id === action.payload._id),
         1
       );
-      state.total -= action.payload.price * action.payload.quantity;
+      state.total -= action.payload.cost * action.payload.quantity;
     },
     incrementProduct: (state, action: PayloadAction<any>) => {
       const product = state.products.find(
         (item) => item._id === action.payload._id
       );
       product && product.quantity++;
-      state.total += action.payload.price;
+      state.total += action.payload.cost;
     },
     decrementProduct: (state, action: PayloadAction<any>) => {
       const product = state.products.find(
         (item) => item._id === action.payload._id
       );
       product && product.quantity--;
-      state.total -= action.payload.price;
+      state.total -= action.payload.cost;
     },
     resetCart: (state) => {
       state.products = [];
